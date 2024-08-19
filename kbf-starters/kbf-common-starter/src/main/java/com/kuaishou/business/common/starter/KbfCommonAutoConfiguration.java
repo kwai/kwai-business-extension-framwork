@@ -36,9 +36,6 @@ import com.kuaishou.business.extension.spring.SpringExtPointRealizeCollector;
 
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author Created by wuhao on 2021/2/19.
- */
 @Configuration
 @Slf4j
 @EnableConfigurationProperties(KbfCommonProperties.class)

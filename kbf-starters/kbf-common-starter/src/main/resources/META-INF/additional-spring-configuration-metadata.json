@@ -1,19 +1,9 @@
 {
 	"properties": [
 		{
-			"name": "kwai.business.framework.extension.type",
-			"type": "java.lang.String",
-			"description": "define the type of extension."
-		},
-		{
-			"name": "kwai.business.framework.recognize",
-			"type": "java.lang.String",
-			"description": "define the way to recognize."
-		},
-		{
-			"name": "kwai.business.framework.ext.scanPath",
-			"type": "java.util.List",
-			"description": "define the ext point scan path."
+			"name": "spring.kbf.common.enabled",
+			"type": "java.lang.Boolean",
+			"description": "enabled kbf"
 		}
 	]
 }

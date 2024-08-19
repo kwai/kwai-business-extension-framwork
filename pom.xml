@@ -23,6 +23,7 @@
         <module>kbf-extension</module>
         <module>kbf-portal</module>
         <module>kbf-starters</module>
+        <module>kbf-samples</module>
     </modules>
 
     <dependencyManagement>
