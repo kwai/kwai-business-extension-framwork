@@ -10,7 +10,6 @@ import com.kuaishou.business.samples.sdk.CreateOrderDTO;
 public interface OrderPriceExtPoints extends ExtPoint {
 
 	@KExtPointMethod(belong = "TradeBuyStep", displayName = "计算邮费金额")
-	default Long calculateExpressFee(CreateOrderDTO createOrderDTO) {
-		return 1500L;
-	}
+	Long calculateExpressFee(CreateOrderDTO createOrderDTO);
+
 }

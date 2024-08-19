@@ -11,10 +11,6 @@ import com.kuaishou.business.samples.sdk.response.CreateOrderResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author liuzhuo
- * Created on 2023-04-01 下午11:16
- */
 @Service
 @Slf4j
 public class CreateOrderServiceImpl implements CreateOrderService {

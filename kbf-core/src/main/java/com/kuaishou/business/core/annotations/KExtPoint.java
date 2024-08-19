@@ -12,12 +12,12 @@ public @interface KExtPoint {
     /**
      * 扩展点组归属
      */
-    String belong();
+    String belong() default "";
 
     /**
      * 展示的名字
      */
-    String displayName();
+    String displayName() default "";
 
     /**
      * 默认取class name
