@@ -128,4 +128,4 @@ public class Trade1Realize implements OrderPriceExtPoints {
 
 ## License
 
-Apache Dubbo software is licensed under the Apache License Version 2.0. See the [LICENSE](https://github.com/apache/dubbo/blob/master/LICENSE) file for details.
+kwai-business-extension-framwork software is licensed under the Apache License Version 2.0. See the [LICENSE](https://github.com/kwai/kwai-business-extension-framwork/blob/main/LICENSE) file for details.
