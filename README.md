@@ -44,8 +44,9 @@ cd kbf-samples/kbf-common-sample
 @KExtPoint
 public interface OrderPriceExtPoints extends ExtPoint {
 
-	@KExtPointMethod
-	Long calculateExpressFee(CreateOrderDTO createOrderDTO);
+  @KExtPointMethod
+  Long calculateExpressFee(CreateOrderDTO createOrderDTO);
+
 }
 ```
 1. 定义扩展接口继承`ExtPoint`
@@ -58,18 +59,18 @@ public interface OrderPriceExtPoints extends ExtPoint {
 @Service
 public class CreateOrderServiceImpl implements CreateOrderService {
 
-	@KExtPointInvoke
-	private OrderPriceExtPoints orderPriceExtPoints;
+  @KExtPointInvoke
+  private OrderPriceExtPoints orderPriceExtPoints;
 
-	@Override
-	@KSessionAround
-	public CreateOrderResponse createOrder(CreateOrderRequest request) {
-		CreateOrderDTO createOrder = request.getCreateOrder();
-		Long expressFee = orderPriceExtPoints.calculateExpressFee(createOrder);
-		CreateOrderResponse response = new CreateOrderResponse();
-		response.setExpressFee(expressFee);
-		return response;
-	}
+  @Override
+  @KSessionAround
+  public CreateOrderResponse createOrder(CreateOrderRequest request) {
+    CreateOrderDTO createOrder = request.getCreateOrder();
+    Long expressFee = orderPriceExtPoints.calculateExpressFee(createOrder);
+    CreateOrderResponse response = new CreateOrderResponse();
+    response.setExpressFee(expressFee);
+    return response;
+  }
 }
 ```
 1. 定义扩展服务，需要将其定义为Spring Bean
@@ -83,25 +84,25 @@ public class CreateOrderServiceImpl implements CreateOrderService {
 @Component
 public class Trade1Identity implements NormalBizIdentityDefinition {
 
-	@Override
-	public String supportedBizCode() {
-		return Trade1Constants.BIZ_CODE;
-	}
+  @Override
+  public String supportedBizCode() {
+    return Trade1Constants.BIZ_CODE;
+  }
 
-	@Override
-	public String scanPath() {
-		return "*";
-	}
+  @Override
+  public String scanPath() {
+    return "*";
+  }
 
-	@Override
-	public MatchResult match(Object request) {
-		CreateOrderRequest createOrder = (CreateOrderRequest) request;
-		if (createOrder.getBizCode().equals("trade1")) {
-			return MatchResult.MATCH;
-		} else {
-			return MatchResult.NOT_MATCH;
-		}
-	}
+  @Override
+  public MatchResult match(Object request) {
+    CreateOrderRequest createOrder = (CreateOrderRequest) request;
+    if (createOrder.getBizCode().equals("trade1")) {
+      return MatchResult.MATCH;
+    } else {
+      return MatchResult.NOT_MATCH;
+    }
+  }
 }
 ```
 1. 扩展点需要业务去实现，定义业务类实现`NormalBizIdentityDefinition `,并将其定义为 Spring Bean
