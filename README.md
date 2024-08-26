@@ -3,7 +3,7 @@
 提供通用业务扩展框架，引入业务身份 + 提供可扩展的隔离架构，帮助业务搭建定制业务流程的架构标准、研发工具和运维体系。通过「能力全在线，定制都可见」的解决策略，帮助业务快速接入、精细化运维和稳定性保障
 
 ## Architecture
-![Architecture](img.png)
+![Architecture](img/readme/img.png)
 
 ## Getting started
 
@@ -20,7 +20,7 @@ cd kbf-samples/kbf-common-sample
 
 ```xml
 <dependency>
-  <groupId>kuaishou</groupId>
+  <groupId>com.kuaishou</groupId>
   <artifactId>kbf-common-starter</artifactId>
   <version>{{last_version}}</version>
 </dependency>

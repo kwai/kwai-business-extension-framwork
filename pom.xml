@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>kuaishou</groupId>
+    <groupId>com.kuaishou</groupId>
     <artifactId>kwai-business-extension-framwork</artifactId>
     <packaging>pom</packaging>
     <version>${revision}</version>
 
     <properties>
         <flat.version>1.1.0</flat.version>
-        <revision>1.0.3-SNAPSHOT</revision>
+        <revision>1.0.0-SNAPSHOT</revision>
         <spring.version>5.3.13</spring.version>
         <checkstyle.skip>true</checkstyle.skip>
         <maven.compiler.target>8</maven.compiler.target>
@@ -84,22 +84,22 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>kuaishou</groupId>
+                <groupId>com.kuaishou</groupId>
                 <artifactId>kbf-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>kuaishou</groupId>
+                <groupId>com.kuaishou</groupId>
                 <artifactId>kbf-engine</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>kuaishou</groupId>
+                <groupId>com.kuaishou</groupId>
                 <artifactId>kbf-portal</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>kuaishou</groupId>
+                <groupId>com.kuaishou</groupId>
                 <artifactId>kbf-spring-extension</artifactId>
                 <version>${project.version}</version>
             </dependency>
