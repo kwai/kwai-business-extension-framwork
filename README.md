@@ -128,6 +128,15 @@ public class Trade1Realize implements OrderPriceExtPoints {
 1. 实现扩展点接口方法，实现该业务对应的逻辑，并将该实现类定义为 Spring Bean
 2. 在实现类上添加`@ KBizRealize `注解，`bizCode `为对应的业务身份
 
+## Built With
+• JDK 11
+
+• Spring Framework 5+
+
+• Spring Boot 2.5+
+
+• Maven 3.0
+
 ## License
 
 kwai-business-extension-framwork software is licensed under the Apache License Version 2.0. See the [LICENSE](https://github.com/kwai/kwai-business-extension-framwork/blob/main/LICENSE) file for details.
