@@ -13,7 +13,7 @@
         <checkstyle.skip>true</checkstyle.skip>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
-        <revision>1.0.0-SNAPSHOT</revision>
+        <revision>1.0.0</revision>
     </properties>
 
     <modules>
