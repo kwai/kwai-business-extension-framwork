@@ -2,7 +2,7 @@
 ![GitHub License](https://img.shields.io/github/license/kwai/kwai-business-extension-framwork)
 ![Maven Central Version](https://img.shields.io/maven-central/v/com.kuaishou/kwai-business-extension-framwork)
 
-提供通用业务扩展框架，引入业务身份 + 提供可扩展的隔离架构，帮助业务搭建定制业务流程的架构标准、研发工具和运维体系。通过「能力全在线，定制都可见」的解决策略，帮助业务快速接入、精细化运维和稳定性保障
+提供一套通用业务扩展框架，通过引入业务身份识别和可扩展的隔离架构，帮助业务搭建定制业务流程的架构标准、研发工具和运维体系。基于「能力全在线，定制都可见」的策略，实现业务的快速接入、精细化运维和稳定性保障
 
 ## Architecture
 ![Architecture](img/readme/img.png)
