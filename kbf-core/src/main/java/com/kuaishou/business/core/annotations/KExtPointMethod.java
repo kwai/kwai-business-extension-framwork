@@ -17,22 +17,22 @@ import com.kuaishou.business.core.reduce.ReduceType;
 public @interface KExtPointMethod {
 
     /**
-     * 扩展点方法归属
+	 * @return 扩展点方法归属
      */
     String belong() default "";
 
     /**
-     * 展示的名字
+	 * @return 展示的名字
      */
     String displayName() default "";
 
     /**
-     * 默认取class name
+	 * @return 默认取class name
      */
     String uniqueName() default "";
 
     /**
-     * 扩展实例的合并策略
+	 * @return 扩展实例的合并策略
      */
     ReduceType reduceType() default ReduceType.FIRST;
 

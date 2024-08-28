@@ -1,5 +1,6 @@
 package com.kuaishou.business.core.identity.product;
 
+import com.kuaishou.business.core.annotations.KProduct;
 import com.kuaishou.business.core.identity.MatchResult;
 
 /**

@@ -10,7 +10,7 @@ import com.kuaishou.business.core.extpoint.ExtPointRealizeWrap;
 public interface KbfRealizeItem extends KbfItem {
 
     /**
-     * 实例
+     * @return 实例
      */
     List<ExtPointRealizeWrap> getExtPointRealizes();
 

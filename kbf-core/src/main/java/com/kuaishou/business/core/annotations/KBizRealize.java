@@ -13,12 +13,12 @@ import java.lang.annotation.Target;
 public @interface KBizRealize {
 
     /**
-     * 业务编码
+	 * @return 业务编码
      */
     String[] bizCode();
 
     /**
-     * 业务名称
+	 * @return 业务名称
      */
     String bizName() default "";
 

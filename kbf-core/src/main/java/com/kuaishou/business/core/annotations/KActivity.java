@@ -16,13 +16,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface KActivity {
 
-    /**
-     * 活动名称
-     */
+	/**
+	 * @return 活动名称
+	 */
     String name();
 
     /**
-     * 活动编码
+	 * @return 活动编码
      */
     String code();
 }

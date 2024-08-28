@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author yangtianwen
- * @date 2022-04-04
  */
 @Slf4j
 public class ExtensionSpecReporter {

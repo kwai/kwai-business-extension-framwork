@@ -21,15 +21,6 @@ public class ExtExecutor {
         executeVoid(extClz, extMethod, defaultMethod, reducer, null);
     }
 
-    /**
-     * 扩展点执行
-     *
-     * @param extClz 扩展点类
-     * @param extMethod 扩展点方法
-     * @param defaultMethod 默认方法
-     * @param request 身份识别参数
-     *
-     */
     public static <Ext extends ExtPoint, P> void executeVoid(Class<Ext> extClz, ExtAction<Ext> extMethod, Runnable defaultMethod, Reducer<Void, Void> reducer, P request) {
         ExtUtils.extActuator.executeVoid(extClz, extMethod, defaultMethod, reducer, request);
     }
@@ -39,15 +30,6 @@ public class ExtExecutor {
         return execute(extClz, extMethod, defaultMethod, reducer, null);
     }
 
-    /**
-     * 扩展点执行
-     *
-     * @param extClz 扩展点类
-     * @param extMethod 扩展点方法
-     * @param defaultMethod 默认方法 -> 业务方指定 或 无匹配的扩展点时执行
-     * @param request 身份识别参数
-     *
-     */
     public static <Ext extends ExtPoint, T, R, P> R execute(Class<Ext> extClz, ExtCallback<Ext, T> extMethod, Supplier<T> defaultMethod, Reducer<T, R> reducer, P request) {
         return ExtUtils.extActuator.execute(extClz, extMethod, defaultMethod, reducer, request);
     }

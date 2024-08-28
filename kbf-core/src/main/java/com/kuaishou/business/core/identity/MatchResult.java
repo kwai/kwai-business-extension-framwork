@@ -9,7 +9,7 @@ import java.util.Objects;
 public enum MatchResult implements Match {
 
     /**
-     * 未知状态 -> 代表信息缺失,还可以再识别
+     * 未知状态,代表信息缺失,还可以再识别
      */
     UNKNOWN,
     /**

@@ -6,12 +6,12 @@ package com.kuaishou.business.core.identity.manage;
 public interface KbfItem {
 
     /**
-     * 编码
+     * @return 编码
      */
     String code();
 
     /**
-     * 名称
+     * @return 名称
      */
     String name();
 }

@@ -16,22 +16,22 @@ import java.lang.annotation.Target;
 public @interface KStep {
 
     /**
-     * 步骤名称
+     * @return 步骤名称
      */
     String name();
 
     /**
-     * 步骤编码
+     * @return 步骤编码
      */
     String code();
 
     /**
-     * 步骤归属
+     * @return 步骤归属
      */
     String belong();
 
     /**
-     * 步骤顺序
+     * @return 步骤顺序
      */
     int order() default Integer.MIN_VALUE;
 }

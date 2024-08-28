@@ -4,7 +4,6 @@ import java.util.List;
 
 /**
  * @author yangtianwen
- * @date 2022-04-01
  */
 public interface RemoteBizIdentityConfigLoader {
 

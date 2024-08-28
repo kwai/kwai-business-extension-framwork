@@ -18,7 +18,7 @@ public class NormalProductItem extends BaseNormalProductItem<NormalProductIdenti
     }
 
     /**
-     * 是否组合产品
+     * @return 是否组合产品
      */
     public boolean isCombo() {
         return false;

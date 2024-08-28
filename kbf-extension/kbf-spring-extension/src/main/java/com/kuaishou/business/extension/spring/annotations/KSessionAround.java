@@ -12,9 +12,6 @@ import com.kuaishou.business.core.context.KBizContext;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface KSessionAround {
 
-    /**
-     * 流程业务上下文类型
-     */
     Class<? extends KBizContext> bizContextType() default DefaultKBizContext.class;
 
 }

@@ -6,7 +6,6 @@ import lombok.Data;
 
 /**
  * @author yangtianwen
- * @date 2022-04-03
  */
 @Data
 public class BizIdentityConfigDO {

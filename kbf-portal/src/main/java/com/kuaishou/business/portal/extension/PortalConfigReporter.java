@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author yangtianwen
- * @date 2022-04-09
  */
 @Slf4j
 public class PortalConfigReporter {

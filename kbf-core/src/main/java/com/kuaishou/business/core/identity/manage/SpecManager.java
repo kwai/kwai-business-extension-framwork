@@ -12,43 +12,53 @@ import java.util.Collection;
  */
 public interface SpecManager<P extends BaseProductItem> {
 
-    /**
-     * 注册垂直业务
-     */
+	/**
+	 *
+	 * @param businessItem 垂直业务
+	 */
     void registerBusinessSpec(BusinessItem businessItem);
 
-    /**
-     * 注册水平产品
-     */
+	/**
+	 *
+	 * @param productSpec 产品
+	 */
     void registerProductSpec(P productSpec);
 
-    /**
-     * 获取垂直业务注册信息
-     */
+	/**
+	 *
+	 * @param code 业务身份
+	 * @return BusinessItem
+	 */
     BusinessItem getBusinessSpec(String code);
 
-    /**
-     * 获取水平产品注册信息
-     */
+	/**
+	 *
+	 * @param code 业务身份
+	 * @return 产品
+	 */
     P getProductSpec(String code);
 
-    /**
-     * 获取所有注册的水平产品信息
-     */
+	/**
+	 *
+	 * @return 所有产品
+	 */
     Collection<P> getAllProductSpecs();
 
-    /**
-     * 获取所有注册的垂直业务信息
-     */
+	/**
+	 *
+	 * @return 所有业务
+	 */
     Collection<BusinessItem> getAllBusinessSpecs();
 
-    /**
-     * 获取所有注册的水平产品信息的数量
-     */
+	/**
+	 *
+	 * @return 产品数量
+	 */
     int countAllProductSpecs();
 
-    /**
-     * 获取所有注册的垂直业务信息的数量
-     */
+	/**
+	 *
+	 * @return 业务数量
+	 */
     int countAllBusinessSpecs();
 }

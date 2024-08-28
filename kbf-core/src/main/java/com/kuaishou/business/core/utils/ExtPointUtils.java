@@ -10,16 +10,19 @@ import com.kuaishou.business.core.exception.IllegalExtPointException;
 
 public final class ExtPointUtils {
 
-    /**
-     * 简单判断class是否是有效的扩展点
-     */
+	/**
+	 *
+	 * @param clazz class
+	 * @return true/false
+	 */
     public static boolean isExt(Class<?> clazz) {
         return Objects.nonNull(clazz) && clazz.isInterface() && Objects.nonNull(clazz.getAnnotation(KExtPoint.class));
     }
 
-    /**
-     * 校验扩展点
-     */
+	/**
+	 *
+	 * @param clazz class
+	 */
     public static void checkExt(Class<?> clazz) {
         if (!isExt(clazz)) {
             throw new IllegalExtPointException(clazz.getCanonicalName());

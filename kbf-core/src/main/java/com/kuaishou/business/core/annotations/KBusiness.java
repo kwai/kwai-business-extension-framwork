@@ -19,12 +19,12 @@ import com.kuaishou.business.core.identity.manage.BusinessItem;
 public @interface KBusiness {
 
     /**
-     * 名称
+     * @return 名称
      */
     String name() default "";
 
     /**
-     * 编码
+     * @return 编码
      */
     String code() default "";
 

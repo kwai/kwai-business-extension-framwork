@@ -10,7 +10,6 @@ import com.kuaishou.business.portal.extension.ExtensionPointSpecDO;
 
 /**
  * @author yangtianwen
- * @date 2022-04-04
  */
 public class ActivitySpecManager {
 

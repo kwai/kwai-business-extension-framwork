@@ -2,7 +2,6 @@ package com.kuaishou.business.portal.common;
 
 /**
  * @author yangtianwen
- * @date 2022-04-09
  */
 public interface ConfigConstant {
 

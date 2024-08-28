@@ -7,7 +7,6 @@ import com.kuaishou.business.portal.common.ConfigConstant;
 
 /**
  * @author yangtianwen
- * @date 2022-04-04
  */
 public class ProcessSpecManager {
 

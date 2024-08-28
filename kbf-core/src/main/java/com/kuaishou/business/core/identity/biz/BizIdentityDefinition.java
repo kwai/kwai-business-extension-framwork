@@ -10,12 +10,12 @@ import com.kuaishou.business.core.identity.Match;
 public interface BizIdentityDefinition<T, R extends Match> extends IdentityDefinition, IdentityMatcher<T, R> {
 
     /**
-     * 当前支持的业务身份
+     * @return 当前支持的业务身份
      */
     String supportedBizCode();
 
     /**
-     * 业务身份所对应的扫描路径
+     * @return 业务身份所对应的扫描路径
      */
     String scanPath();
 

@@ -10,17 +10,17 @@ import java.lang.annotation.Target;
 public @interface KExtPoint {
 
     /**
-     * 扩展点组归属
+	 * @return 扩展点组归属
      */
     String belong() default "";
 
     /**
-     * 展示的名字
+	 * @return 展示的名字
      */
     String displayName() default "";
 
     /**
-     * 默认取class name
+	 * @return 默认取class name
      */
     String uniqueName() default "";
 

@@ -4,7 +4,6 @@ import lombok.Data;
 
 /**
  * @author yangtianwen
- * @date 2022-05-18
  */
 @Data
 public class RichExtensionSpecDO {
