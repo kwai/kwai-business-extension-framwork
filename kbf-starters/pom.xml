@@ -13,6 +13,8 @@
 
     <artifactId>kbf-starters</artifactId>
     <packaging>pom</packaging>
+    <name>kbf-starters</name>
+
 
     <modules>
         <module>kbf-common-starter</module>

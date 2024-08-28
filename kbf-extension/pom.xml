@@ -13,6 +13,8 @@
 
     <artifactId>kbf-extension</artifactId>
     <packaging>pom</packaging>
+    <name>kbf-extension</name>
+
 
     <modules>
         <module>kbf-spring-extension</module>
