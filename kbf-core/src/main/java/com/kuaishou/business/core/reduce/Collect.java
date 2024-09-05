@@ -8,16 +8,13 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.Lists;
 
-import lombok.Getter;
-
 /**
  * 1@author liuzhuo
  * Created on 2023-03-23 下午10:04
  * 全部满足条件的结果
  */
-class Collect<T> extends Reducer<T, List<T>> {
+class Collect<T> implements Reducer<T, List<T>> {
 
-    @Getter
     private final Predicate<T> predicate;
 
     public Collect(Predicate<T> predicate) {

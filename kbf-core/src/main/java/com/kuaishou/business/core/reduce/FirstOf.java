@@ -10,36 +10,45 @@ import org.apache.commons.collections4.CollectionUtils;
  * Created on 2023-03-17 下午6:29
  * 第一个
  */
-class FirstOf<T> extends Reducer<T, T> {
+class FirstOf<T> implements Reducer<T, T> {
 
-    private Predicate<T> predicate;
+	private Predicate<T> predicate;
 
-    public FirstOf(Predicate<T> predicate) {
-        this.predicate = predicate;
-    }
+	public FirstOf(Predicate<T> predicate) {
+		this.predicate = predicate;
+	}
 
-    public FirstOf() {
+	public FirstOf() {
 
-    }
+	}
 
-    @Override
-    public T reduce(Collection<T> results) {
-        if (CollectionUtils.isEmpty(results)) {
-            return null;
-        }
+	@Override
+	public boolean predicate(T result) {
+		if (null == predicate) {
+			return true;
+		} else {
+			return predicate.test(result);
+		}
+	}
 
-        for (T result : results) {
-            if (null == predicate) {
-                return result;
-            } else if (predicate.test(result)) {
-                return result;
-            }
-        }
-        return null;
-    }
+	@Override
+	public T reduce(Collection<T> results) {
+		if (CollectionUtils.isEmpty(results)) {
+			return null;
+		}
 
-    @Override
-    public ReduceType reduceType() {
-        return ReduceType.FIRST;
-    }
+		for (T result : results) {
+			if (null == predicate) {
+				return result;
+			} else if (predicate.test(result)) {
+				return result;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public ReduceType reduceType() {
+		return ReduceType.FIRST;
+	}
 }

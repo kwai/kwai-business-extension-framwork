@@ -6,9 +6,13 @@ import java.util.Collection;
  * @author liuzhuo
  * Created on 2023-03-16 下午7:57
  */
-public abstract class Reducer<T, R> {
+public interface Reducer<T, R> {
 
-    public abstract R reduce(Collection<T> results);
+	R reduce(Collection<T> results);
 
-    public abstract ReduceType reduceType();
+	default boolean predicate(T result) {
+		return true;
+	}
+
+	ReduceType reduceType();
 }

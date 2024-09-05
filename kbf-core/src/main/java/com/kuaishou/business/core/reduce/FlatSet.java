@@ -13,7 +13,7 @@ import com.google.common.collect.Sets;
  * @author liuzhuo
  * Created on 2023-03-30 下午10:20
  */
-class FlatSet<T> extends Reducer<List<T>, Set<T>> {
+class FlatSet<T> implements Reducer<List<T>, Set<T>> {
 
     private final Predicate<List<T>> predicate;
 

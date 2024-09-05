@@ -3,7 +3,6 @@ package com.kuaishou.business.extension.engine;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -12,6 +11,7 @@ import com.kuaishou.business.core.extpoint.ExtPoint;
 import com.kuaishou.business.core.function.ExtCallback;
 import com.kuaishou.business.core.identity.manage.KbfRealizeItem;
 import com.kuaishou.business.core.identity.manage.NormalProductItem;
+import com.kuaishou.business.core.reduce.ReduceType;
 import com.kuaishou.business.core.reduce.Reducer;
 import com.kuaishou.business.core.session.KSessionScope;
 
@@ -31,21 +31,29 @@ public abstract class Executor {
 
 		List<Ext> instanceList = SimpleKExtPointManger.getInstance(kbfRealizeItemList, extClz, methodName);
 
+		return execAndHandlerResults(extMethod, defaultMethod, reducer, instanceList);
+	}
+
+	private static <Ext extends ExtPoint, T, R> R execAndHandlerResults(ExtCallback<Ext, T> extMethod,
+		Supplier<T> defaultMethod, Reducer<T, R> reducer, List<Ext> instanceList) {
 		if (CollectionUtils.isEmpty(instanceList)) {
 			return reducer.reduce(Lists.newArrayList(defaultMethod.get()));
 		}
-		switch (reducer.reduceType()) {
-			case FIRST:
-				//以扩展点优先
-				return reducer.reduce(Lists.newArrayList(extMethod.apply(instanceList.get(0))));
-			case ALL:
-				List<T> results = instanceList.stream().map(extMethod).collect(Collectors.toList());
-				T defaultMethodResult = defaultMethod.get();
-				results.add(defaultMethodResult);
-				return reducer.reduce(results);
-			default:
-				return null;
+		List<T> results = Lists.newArrayList();
+		boolean reduceFirst = ReduceType.FIRST.equals(reducer.reduceType());
+		for (Ext instance : instanceList) {
+			T result = extMethod.apply(instance);
+			if (reduceFirst) {
+				if (reducer.predicate(result)) {
+					return reducer.reduce(Lists.newArrayList(result));
+				}
+			} else {
+				results.add(result);
+			}
 		}
+		T defaultMethodResult = defaultMethod.get();
+		results.add(defaultMethodResult);
+		return reducer.reduce(results);
 	}
 
 	public abstract <P> Set<NormalProductItem> recognize(P request);

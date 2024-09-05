@@ -14,6 +14,7 @@ public class Reducers {
 
 	/**
 	 * { "data1" : "a" } , { "data2" : "b" } -{ "data1" : "a" , "data2" : "b" }
+	 * predicate should exclude null value at least
 	 *
 	 * @param  predicate predicate
 	 * @param <K> K
