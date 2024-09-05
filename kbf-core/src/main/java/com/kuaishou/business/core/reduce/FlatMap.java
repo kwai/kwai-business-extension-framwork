@@ -12,7 +12,7 @@ import com.google.common.collect.Maps;
  * 1@author liuzhuo
  * Created on 2023-03-19 下午8:57
  */
-class FlatMap<K, V> extends Reducer<Map<K, V>, Map<K, V>> {
+class FlatMap<K, V> implements Reducer<Map<K, V>, Map<K, V>> {
 
     private final Predicate<Map<K, V>> predicate;
 

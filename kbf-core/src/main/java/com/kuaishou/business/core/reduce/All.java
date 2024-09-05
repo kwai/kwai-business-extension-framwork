@@ -12,22 +12,22 @@ import com.google.common.collect.Lists;
  * Created on 2023-03-17 下午6:36
  * 全部
  */
-class All<T> extends Reducer<T, List<T>>{
+class All<T> implements Reducer<T, List<T>>{
 
-    public All() {
+	public All() {
 
-    }
+	}
 
-    @Override
-    public List<T> reduce(Collection<T> results) {
-        if (CollectionUtils.isEmpty(results)) {
-            return Lists.newArrayList();
-        }
-        return Lists.newArrayList(results);
-    }
+	@Override
+	public List<T> reduce(Collection<T> results) {
+		if (CollectionUtils.isEmpty(results)) {
+			return Lists.newArrayList();
+		}
+		return Lists.newArrayList(results);
+	}
 
-    @Override
-    public ReduceType reduceType() {
-        return ReduceType.ALL;
-    }
+	@Override
+	public ReduceType reduceType() {
+		return ReduceType.ALL;
+	}
 }

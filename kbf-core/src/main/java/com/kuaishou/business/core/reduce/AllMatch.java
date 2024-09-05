@@ -8,7 +8,7 @@ import java.util.function.Predicate;
  * Created on 2023-03-17 下午6:58
  * 全部匹配
  */
-class AllMatch<T> extends Reducer<T, Boolean> {
+class AllMatch<T> implements Reducer<T, Boolean> {
 
     private final Predicate<T> predicate;
 

@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
  * 1@author liuzhuo
  * Created on 2023-03-20 下午7:45
  */
-class FlatList<T> extends Reducer<List<T>, List<T>> {
+class FlatList<T> implements Reducer<List<T>, List<T>> {
 
     private final Predicate<List<T>> predicate;
 
