@@ -18,6 +18,7 @@
 
     <modules>
         <module>kbf-common-starter</module>
+        <module>kbf-biz-scene-starter</module>
     </modules>
 
     <dependencies>

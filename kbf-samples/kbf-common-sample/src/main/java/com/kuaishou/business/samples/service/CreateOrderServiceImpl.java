@@ -2,6 +2,8 @@ package com.kuaishou.business.samples.service;
 
 import org.springframework.stereotype.Service;
 
+import com.kuaishou.business.core.reduce.Reducers;
+import com.kuaishou.business.extension.spring.ExtExecutor;
 import com.kuaishou.business.extension.spring.annotations.KExtPointInvoke;
 import com.kuaishou.business.extension.spring.annotations.KSessionAround;
 import com.kuaishou.business.samples.sdk.CreateOrderDTO;
@@ -25,6 +27,21 @@ public class CreateOrderServiceImpl implements CreateOrderService {
 
 		Long expressFee = orderPriceExtPoints.calculateExpressFee(createOrder);
 		log.info("exec calculateExpressFee pre oid : {}, result : {}}", createOrder.getOid(), expressFee);
+
+		CreateOrderResponse response = new CreateOrderResponse();
+		response.setExpressFee(expressFee);
+		return response;
+	}
+
+	@Override
+	@KSessionAround
+	public CreateOrderResponse createOrder2(CreateOrderRequest request) {
+		CreateOrderDTO createOrder = request.getCreateOrder();
+
+		Long expressFee = ExtExecutor.execute(OrderPriceExtPoints.class,
+			orderPriceExtPoints -> orderPriceExtPoints.calculateExpressFee(createOrder),
+			() -> 100L, Reducers.first());
+		log.info("createOrder2 exec calculateExpressFee pre oid : {}, result : {}}", createOrder.getOid(), expressFee);
 
 		CreateOrderResponse response = new CreateOrderResponse();
 		response.setExpressFee(expressFee);
