@@ -27,15 +27,7 @@ public class GreetingController {
 	@ResponseBody
 	public Object kbf(@RequestParam String bizCode) {
 		try {
-			CreateOrderRequest createOrderRequest = new CreateOrderRequest();
-
-			CreateOrderDTO createOrder = new CreateOrderDTO();
-			createOrder.setCategoryId(1L);
-			createOrder.setOid(1L);
-
-			createOrderRequest.setCreateOrder(createOrder);
-			createOrderRequest.setBizCode(bizCode);
-
+			CreateOrderRequest createOrderRequest = buildCreateOrderRequest(bizCode);
 			CreateOrderResponse response = createOrderService.createOrder(createOrderRequest);
 
 			return ControllerResult.of(response);
@@ -46,5 +38,34 @@ public class GreetingController {
 			log.error("GreetingController call kbf Syetem error bizCode is {} ", bizCode, t);
 			return ControllerResult.ofFailed(SampleCommonErrorEnum.SERVER_ERROR.getCode() + "", SampleCommonErrorEnum.SERVER_ERROR.getDesc());
 		}
+	}
+
+	@RequestMapping("/kbf2")
+	@ResponseBody
+	public Object kbf2(@RequestParam String bizCode) {
+		try {
+			CreateOrderRequest createOrderRequest = buildCreateOrderRequest(bizCode);
+			CreateOrderResponse response = createOrderService.createOrder2(createOrderRequest);
+
+			return ControllerResult.of(response);
+		} catch (BizIdentityException e) {
+			log.error("GreetingController call kbf2 BizIdentityException bizCode is {} ", bizCode, e);
+			return ControllerResult.ofFailed(SampleCommonErrorEnum.BIZ_IDENTITY_NOT_EXIST.getCode() + "", e.getErrorMsg());
+		} catch (Throwable t) {
+			log.error("GreetingController call kbf2 Syetem error bizCode is {} ", bizCode, t);
+			return ControllerResult.ofFailed(SampleCommonErrorEnum.SERVER_ERROR.getCode() + "", SampleCommonErrorEnum.SERVER_ERROR.getDesc());
+		}
+	}
+
+	private static CreateOrderRequest buildCreateOrderRequest(String bizCode) {
+		CreateOrderRequest createOrderRequest = new CreateOrderRequest();
+
+		CreateOrderDTO createOrder = new CreateOrderDTO();
+		createOrder.setCategoryId(1L);
+		createOrder.setOid(1L);
+
+		createOrderRequest.setCreateOrder(createOrder);
+		createOrderRequest.setBizCode(bizCode);
+		return createOrderRequest;
 	}
 }

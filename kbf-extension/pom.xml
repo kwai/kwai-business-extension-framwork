@@ -18,6 +18,7 @@
 
     <modules>
         <module>kbf-spring-extension</module>
+        <module>kbf-biz-scene-extension</module>
     </modules>
 
     <dependencies>
