@@ -2,6 +2,7 @@ package com.kuaishou.business.common.starter;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -10,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ClassUtils;
 
-import com.google.common.collect.Lists;
 import com.kuaishou.business.common.starter.conifg.KbfCommonProperties;
 import com.kuaishou.business.core.annotations.KBusiness;
 import com.kuaishou.business.core.exception.BizIdentityException;
@@ -27,7 +27,9 @@ import com.kuaishou.business.extension.dimension.identity.BizSceneItem;
 import com.kuaishou.business.extension.dimension.identity.BizSceneSpecManager;
 import com.kuaishou.business.extension.dimension.identity.filter.BizSceneTypeFilter;
 import com.kuaishou.business.extension.dimension.session.BizSceneKSessionFactory;
+import com.kuaishou.business.extension.engine.BizIdentityMatchProcessor;
 import com.kuaishou.business.extension.engine.DefaultBizIdentityRecognizer;
+import com.kuaishou.business.extension.engine.DefaultBizIdentitySessionWrap;
 import com.kuaishou.business.extension.engine.ExtActuator;
 import com.kuaishou.business.extension.spring.ExtUtils;
 import com.kuaishou.business.extension.spring.KSessionAroundAspect;
@@ -109,9 +111,15 @@ public class KbfBizSceneAutoConfiguration {
 	}
 
 	@Bean
-	public BizIdentityRecognizer bizIdentityRecognizer(SpecManager specManager) {
+	public BizIdentityRecognizer bizIdentityRecognizer(SpecManager<BizSceneItem> specManager) {
+		List<DefaultBizIdentitySessionWrap> bizIdentitySessionWrapList = specManager.getAllBusinessSpecs().stream()
+			.map(item -> {
+				DefaultBizIdentitySessionWrap bizIdentitySessionWrap = new DefaultBizIdentitySessionWrap();
+				bizIdentitySessionWrap.setItem(item);
+				return bizIdentitySessionWrap;
+			}).collect(Collectors.toList());
 		DefaultBizIdentityRecognizer defaultBizIdentityRecognizer =
-			new DefaultBizIdentityRecognizer(Lists.newArrayList(specManager.getAllBusinessSpecs()));
+			new DefaultBizIdentityRecognizer(bizIdentitySessionWrapList, new BizIdentityMatchProcessor());
 		return defaultBizIdentityRecognizer;
 	}
 

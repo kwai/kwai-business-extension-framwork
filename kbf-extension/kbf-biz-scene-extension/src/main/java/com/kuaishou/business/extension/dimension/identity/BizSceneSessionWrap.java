@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.google.common.collect.Maps;
+import com.kuaishou.business.core.identity.KbfRealizeItemSessionWrap;
 import com.kuaishou.business.extension.dimension.MatchStatus;
 
 import lombok.Data;
@@ -13,9 +14,9 @@ import lombok.Data;
  * Created on 2023-05-14 16:56
  */
 @Data
-public class BizSceneSessionWrap {
+public class BizSceneSessionWrap implements KbfRealizeItemSessionWrap<BizSceneItem> {
 
-    private BizSceneItem bizSceneSpec;
+    private BizSceneItem bizSceneItem;
 
     /**
      * 全局维度产品匹配状态
@@ -29,4 +30,9 @@ public class BizSceneSessionWrap {
     private Map<Long, MatchStatus> resourceMatchStatus = Maps.newHashMap();
 
     private ReentrantLock lock = new ReentrantLock();
+
+	@Override
+	public BizSceneItem unwrap() {
+		return bizSceneItem;
+	}
 }

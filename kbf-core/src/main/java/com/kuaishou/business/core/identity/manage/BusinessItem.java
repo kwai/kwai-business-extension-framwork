@@ -33,7 +33,7 @@ public class BusinessItem<T> implements KbfRealizeItem {
      * 业务定义
      */
     @Getter
-    private final NormalBizIdentityDefinition<T> bizIdentityDefinition;
+    private final NormalBizIdentityDefinition<T> definition;
 
     /**
      * 实例
@@ -55,7 +55,7 @@ public class BusinessItem<T> implements KbfRealizeItem {
         return extPointWraps;
     }
 
-    @Override
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

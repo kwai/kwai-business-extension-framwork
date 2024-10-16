@@ -77,11 +77,11 @@ public final class BizSceneKSessionScope {
         List<BizSceneSessionWrap> bizSceneSessionWraps = getCurrentSession().getBizSceneSessionWraps();
         Set<BizSceneItem> result = Sets.newHashSet();
         for (BizSceneSessionWrap bizSceneSessionWrap : bizSceneSessionWraps) {
-            if (!EffectScope.REQUEST.equals(bizSceneSessionWrap.getBizSceneSpec().getEffectScope())) {
+            if (!EffectScope.REQUEST.equals(bizSceneSessionWrap.getBizSceneItem().getEffectScope())) {
                 continue;
             }
             if (MatchStatus.match(bizSceneSessionWrap.getGlobalMatchStatus())) {
-                result.add(bizSceneSessionWrap.getBizSceneSpec());
+                result.add(bizSceneSessionWrap.getBizSceneItem());
             }
         }
         return result;
@@ -95,11 +95,11 @@ public final class BizSceneKSessionScope {
         List<BizSceneSessionWrap> bizSceneSessionWraps = getCurrentSession().getBizSceneSessionWraps();
         Set<BizSceneItem> result = Sets.newHashSet();
         for (BizSceneSessionWrap bizSceneSessionWrap : bizSceneSessionWraps) {
-            if (!EffectScope.REQUEST.equals(bizSceneSessionWrap.getBizSceneSpec().getEffectScope())) {
+            if (!EffectScope.REQUEST.equals(bizSceneSessionWrap.getBizSceneItem().getEffectScope())) {
                 continue;
             }
             if (MatchStatus.notMatch(bizSceneSessionWrap.getGlobalMatchStatus())) {
-                result.add(bizSceneSessionWrap.getBizSceneSpec());
+                result.add(bizSceneSessionWrap.getBizSceneItem());
             }
         }
         return result;
@@ -117,13 +117,13 @@ public final class BizSceneKSessionScope {
         List<BizSceneSessionWrap> bizSceneSessionWraps = getCurrentSession().getBizSceneSessionWraps();
         Map<Long, Set<BizSceneItem>> result = Maps.newHashMap();
         for (BizSceneSessionWrap bizSceneSessionWrap : bizSceneSessionWraps) {
-            if (!EffectScope.RESOURCE.equals(bizSceneSessionWrap.getBizSceneSpec().getEffectScope())) {
+            if (!EffectScope.RESOURCE.equals(bizSceneSessionWrap.getBizSceneItem().getEffectScope())) {
                 continue;
             }
             Map<Long, MatchStatus> resourceMatchBizScenes = bizSceneSessionWrap.getResourceMatchStatus();
             for (Entry<Long, MatchStatus> e : resourceMatchBizScenes.entrySet()) {
                 if (MatchStatus.match(e.getValue())) {
-                    result.computeIfAbsent(e.getKey(), l -> Sets.newHashSet()).add(bizSceneSessionWrap.getBizSceneSpec());
+                    result.computeIfAbsent(e.getKey(), l -> Sets.newHashSet()).add(bizSceneSessionWrap.getBizSceneItem());
                 }
             }
         }
@@ -139,11 +139,11 @@ public final class BizSceneKSessionScope {
         List<BizSceneSessionWrap> bizSceneSessionWraps = getCurrentSession().getBizSceneSessionWraps();
         Set<BizSceneItem> result = Sets.newHashSet();
         for (BizSceneSessionWrap bizSceneSessionWrap : bizSceneSessionWraps) {
-            if (!EffectScope.RESOURCE.equals(bizSceneSessionWrap.getBizSceneSpec().getEffectScope())) {
+            if (!EffectScope.RESOURCE.equals(bizSceneSessionWrap.getBizSceneItem().getEffectScope())) {
                 continue;
             }
             if (MatchStatus.match(bizSceneSessionWrap.getResourceMatchStatus().get(resourceId))) {
-                result.add(bizSceneSessionWrap.getBizSceneSpec());
+                result.add(bizSceneSessionWrap.getBizSceneItem());
             }
         }
         return result;
@@ -157,13 +157,13 @@ public final class BizSceneKSessionScope {
         List<BizSceneSessionWrap> bizSceneSessionWraps = getCurrentSession().getBizSceneSessionWraps();
         Map<Long, Set<BizSceneItem>> result = Maps.newHashMap();
         for (BizSceneSessionWrap bizSceneSessionWrap : bizSceneSessionWraps) {
-            if (!EffectScope.RESOURCE.equals(bizSceneSessionWrap.getBizSceneSpec().getEffectScope())) {
+            if (!EffectScope.RESOURCE.equals(bizSceneSessionWrap.getBizSceneItem().getEffectScope())) {
                 continue;
             }
             Map<Long, MatchStatus> resourceMatchBizScenes = bizSceneSessionWrap.getResourceMatchStatus();
             for (Entry<Long, MatchStatus> e : resourceMatchBizScenes.entrySet()) {
                 if (MatchStatus.notMatch(e.getValue())) {
-                    result.computeIfAbsent(e.getKey(), l -> Sets.newHashSet()).add(bizSceneSessionWrap.getBizSceneSpec());
+                    result.computeIfAbsent(e.getKey(), l -> Sets.newHashSet()).add(bizSceneSessionWrap.getBizSceneItem());
                 }
             }
         }
@@ -179,11 +179,11 @@ public final class BizSceneKSessionScope {
         List<BizSceneSessionWrap> bizSceneSessionWraps = getCurrentSession().getBizSceneSessionWraps();
         Set<BizSceneItem> result = Sets.newHashSet();
         for (BizSceneSessionWrap bizSceneSessionWrap : bizSceneSessionWraps) {
-            if (!EffectScope.RESOURCE.equals(bizSceneSessionWrap.getBizSceneSpec().getEffectScope())) {
+            if (!EffectScope.RESOURCE.equals(bizSceneSessionWrap.getBizSceneItem().getEffectScope())) {
                 continue;
             }
             if (MatchStatus.notMatch(bizSceneSessionWrap.getResourceMatchStatus().get(resourceId))) {
-                result.add(bizSceneSessionWrap.getBizSceneSpec());
+                result.add(bizSceneSessionWrap.getBizSceneItem());
             }
         }
         return result;

@@ -72,7 +72,7 @@ public class BizSceneTypeFilter {
 
 		List<BizSceneSessionWrap> filterBizSceneSessionWrap = new ArrayList<>(bizSceneSessionWraps.size());
 		for (BizSceneSessionWrap bizSceneSessionWrap : bizSceneSessionWraps) {
-			BizSceneItem bizSceneItem = bizSceneSessionWrap.getBizSceneSpec();
+			BizSceneItem bizSceneItem = bizSceneSessionWrap.getBizSceneItem();
 			if (supportTypes.contains(bizSceneItem.getBizSceneType())) {
 				filterBizSceneSessionWrap.add(bizSceneSessionWrap);
 			}

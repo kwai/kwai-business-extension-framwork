@@ -58,7 +58,7 @@ public class BizSceneKSessionFactory<T> implements KSessionFactory<BizSceneKSess
         List<BizSceneSessionWrap> bizSceneSessionWrapList = Lists.newArrayListWithExpectedSize(allProductSpecs.size());
         for (BizSceneItem bizSceneSpec : allProductSpecs) {
             BizSceneSessionWrap bizSceneSessionWrap = new BizSceneSessionWrap();
-            bizSceneSessionWrap.setBizSceneSpec(bizSceneSpec);
+            bizSceneSessionWrap.setBizSceneItem(bizSceneSpec);
             bizSceneSessionWrapList.add(bizSceneSessionWrap);
         }
 

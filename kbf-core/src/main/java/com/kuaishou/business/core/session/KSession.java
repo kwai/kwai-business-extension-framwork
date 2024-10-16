@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.kuaishou.business.core.context.KBizContext;
 import com.kuaishou.business.core.identity.manage.BusinessItem;
-import com.kuaishou.business.core.identity.product.ProductSessionWrap;
+import com.kuaishou.business.core.identity.product.DefaultProductSessionWrap;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -36,7 +36,7 @@ public class KSession implements AutoCloseable, Serializable {
     /**
      * 单次请求的产品识别记录
      */
-    private List<ProductSessionWrap> productSessionWraps;
+    private List<DefaultProductSessionWrap> productSessionWraps;
 
     /**
      * 是否执行扩展点
@@ -49,7 +49,7 @@ public class KSession implements AutoCloseable, Serializable {
         KSessionScope.destroy();
     }
 
-    public KSession(String bizCode, BusinessItem businessItem, KBizContext context, List<ProductSessionWrap> productSessionWraps) {
+    public KSession(String bizCode, BusinessItem businessItem, KBizContext context, List<DefaultProductSessionWrap> productSessionWraps) {
         this.bizCode = bizCode;
         this.businessItem = businessItem;
         this.context = context;

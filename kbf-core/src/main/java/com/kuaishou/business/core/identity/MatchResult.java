@@ -37,4 +37,9 @@ public enum MatchResult implements Match {
     public static boolean hasMatchResult(MatchResult matchStatus) {
         return match(matchStatus) || notMatch(matchStatus);
     }
+
+	@Override
+	public boolean hasMatch() {
+		return match(this);
+	}
 }

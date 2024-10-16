@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.Lists;
+import com.kuaishou.business.core.context.ExecuteContext;
 import com.kuaishou.business.core.extpoint.ExtPoint;
 import com.kuaishou.business.core.function.ExtCallback;
 import com.kuaishou.business.core.identity.manage.KbfRealizeItem;
@@ -14,7 +15,7 @@ import com.kuaishou.business.core.reduce.ReduceType;
 import com.kuaishou.business.core.reduce.Reducer;
 import com.kuaishou.business.core.session.KSessionScope;
 
-public abstract class Executor<Context extends ExecutorContext> {
+public abstract class Executor<Context extends ExecuteContext> {
 
 	public <Ext extends ExtPoint, T, R, P> R execute(Class<Ext> extClz, String methodName, ExtCallback<Ext, T> extMethod, Supplier<T> defaultMethod,
 		Reducer<T, R> reducer, P request) {
@@ -58,7 +59,7 @@ public abstract class Executor<Context extends ExecutorContext> {
 
 	public abstract <Ext extends ExtPoint, P> Context buildExecutorContext(Class<Ext> extClz, String methodName, P request);
 
-	public abstract Collection<KbfRealizeItem> recognize(Context context);
+	public abstract <Product extends KbfRealizeItem> Collection<Product> recognize(Context context);
 
 	public abstract boolean check(Context context);
 
