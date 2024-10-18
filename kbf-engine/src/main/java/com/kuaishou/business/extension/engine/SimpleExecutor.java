@@ -9,8 +9,8 @@ import com.kuaishou.business.core.session.KSessionScope;
 public class SimpleExecutor extends Executor {
 
 	@Override
-	public <P> Set<NormalProductItem> recognize(P request) {
-		SimpleProductIdentityRecognizer<P> recognizer = new SimpleProductIdentityRecognizer<>(KSessionScope.getProducts());
+	public Set<NormalProductItem> recognize(Object request) {
+		SimpleProductIdentityRecognizer recognizer = new SimpleProductIdentityRecognizer<>(KSessionScope.getProducts());
 		return recognizer.recognize(request);
 	}
 

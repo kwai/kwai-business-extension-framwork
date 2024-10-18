@@ -6,8 +6,8 @@ import com.kuaishou.business.core.identity.Match;
 /**
  * 水平产品匹配
  */
-public interface ProductIdentityMatcher<T, M extends Match> extends IdentityMatcher<T, M> {
+public interface ProductIdentityMatcher<T> extends IdentityMatcher<T> {
 
     @Override
-    M match(T request);
+    Match match(T request);
 }

@@ -18,8 +18,9 @@ public class SimpleExtActuator extends AbstractExtActuator {
 
     @Override
     public <P> Set<NormalProductItem> recognize(P request) {
-        SimpleProductIdentityRecognizer<P> recognizer = new SimpleProductIdentityRecognizer<>(KSessionScope.getProducts());
+		SimpleProductIdentityRecognizer recognizer = new SimpleProductIdentityRecognizer(KSessionScope.getProducts());
         return recognizer.recognize(request);
     }
+
 
 }

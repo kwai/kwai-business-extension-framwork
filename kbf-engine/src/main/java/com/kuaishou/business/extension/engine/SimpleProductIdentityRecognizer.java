@@ -6,7 +6,7 @@ import java.util.Set;
 import com.google.common.collect.Sets;
 import com.kuaishou.business.core.identity.MatchResult;
 import com.kuaishou.business.core.identity.manage.NormalProductItem;
-import com.kuaishou.business.core.identity.product.ProductSessionWrap;
+import com.kuaishou.business.core.identity.product.DefaultProductSessionWrap;
 import com.kuaishou.business.core.identity.product.ProductIdentityRecognizer;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SimpleProductIdentityRecognizer<T> implements ProductIdentityRecognizer<T, Set<NormalProductItem>> {
 
-    private final List<ProductSessionWrap> productSessionWraps;
+    private final List<DefaultProductSessionWrap> productSessionWraps;
 
-    public SimpleProductIdentityRecognizer(List<ProductSessionWrap> productSessionWraps) {
+    public SimpleProductIdentityRecognizer(List<DefaultProductSessionWrap> productSessionWraps) {
         this.productSessionWraps = productSessionWraps;
     }
 
@@ -29,29 +29,35 @@ public class SimpleProductIdentityRecognizer<T> implements ProductIdentityRecogn
     public Set<NormalProductItem> recognize(T request) {
         Set<NormalProductItem> newEffectProducts = Sets.newHashSet();
 
-        for (ProductSessionWrap productSessionWrap : productSessionWraps) {
-            if (productSessionWrap.getProductSpec().isCombo()) {
-                continue;
-            }
-            MatchResult match = productSessionWrap.getProductSpec().getDefinition().match(request);
-            productSessionWrap.setMatchResult(match);
-            if (MatchResult.match(match)) {
-                newEffectProducts.add(productSessionWrap.getProductSpec());
-            }
-        }
-        //识别组合产品
-        for (ProductSessionWrap productSessionWrap : productSessionWraps) {
-            if (!productSessionWrap.getProductSpec().isCombo()) {
-                continue;
-            }
-            MatchResult match = productSessionWrap.getProductSpec().getDefinition().match(newEffectProducts);
-            productSessionWrap.setMatchResult(match);
-            if (MatchResult.match(match)) {
-                newEffectProducts.add(productSessionWrap.getProductSpec());
-            }
-        }
+		for (DefaultProductSessionWrap productSessionWrap : productSessionWraps) {
+			if (productSessionWrap.getItem().isCombo()) {
+				continue;
+			}
+			matchProduct(productSessionWrap, newEffectProducts, request);
+		}
+		//识别组合产品
+		for (DefaultProductSessionWrap productSessionWrap : productSessionWraps) {
+			if (!productSessionWrap.getItem().isCombo()) {
+				continue;
+			}
+			matchProduct(productSessionWrap, newEffectProducts);
+		}
 
         return newEffectProducts;
     }
+
+	private static void matchProduct(DefaultProductSessionWrap productSessionWrap,
+		Set<NormalProductItem> newEffectProducts, Object... request) {
+		MatchResult match;
+		if (request.length > 0) {
+			match = productSessionWrap.unwrap().getDefinition().match(request[0]);
+		} else {
+			match = productSessionWrap.unwrap().getDefinition().match(newEffectProducts);
+		}
+		productSessionWrap.setMatchResult(match);
+		if (MatchResult.match(match)) {
+			newEffectProducts.add(productSessionWrap.unwrap());
+		}
+	}
 
 }
