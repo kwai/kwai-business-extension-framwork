@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
-import com.kuaishou.business.core.context.ExecuteContext;
+import com.kuaishou.business.core.identity.MatchResult;
 import com.kuaishou.business.core.identity.manage.NormalProductItem;
 import com.kuaishou.business.core.identity.product.DefaultProductSessionWrap;
 import com.kuaishou.business.core.identity.product.ProductIdentityRecognizer;
@@ -17,42 +17,46 @@ import lombok.extern.slf4j.Slf4j;
  * simple recognizer scan all products every time
  */
 @Slf4j
-public class SimpleProductIdentityRecognizer implements ProductIdentityRecognizer<ExecuteContext, Set<NormalProductItem>> {
+public class SimpleProductIdentityRecognizer<T> implements ProductIdentityRecognizer<T, Set<NormalProductItem>> {
 
     private final List<DefaultProductSessionWrap> productSessionWraps;
-	private final ProductMatchProcessor productMatchProcessor;
 
-    public SimpleProductIdentityRecognizer(List<DefaultProductSessionWrap> productSessionWraps,
-            ProductMatchProcessor productMatchProcessor) {
+    public SimpleProductIdentityRecognizer(List<DefaultProductSessionWrap> productSessionWraps) {
         this.productSessionWraps = productSessionWraps;
-        this.productMatchProcessor = productMatchProcessor;
     }
 
     @Override
-    public Set<NormalProductItem> recognize(ExecuteContext context) {
+    public Set<NormalProductItem> recognize(T request) {
         Set<NormalProductItem> newEffectProducts = Sets.newHashSet();
 
 		for (DefaultProductSessionWrap productSessionWrap : productSessionWraps) {
-			if (!productSessionWrap.getItem().isCombo()) {
-				processMatch(productSessionWrap, newEffectProducts, context);
+			if (productSessionWrap.getItem().isCombo()) {
+				continue;
 			}
+			matchProduct(productSessionWrap, newEffectProducts, request);
 		}
-		context.setEffectProducts(newEffectProducts);
 		//识别组合产品
 		for (DefaultProductSessionWrap productSessionWrap : productSessionWraps) {
-			if (productSessionWrap.getItem().isCombo()) {
-				processMatch(productSessionWrap, newEffectProducts, context);
+			if (!productSessionWrap.getItem().isCombo()) {
+				continue;
 			}
+			matchProduct(productSessionWrap, newEffectProducts);
 		}
 
         return newEffectProducts;
     }
 
-	private void processMatch(DefaultProductSessionWrap productSessionWrap,
-		Set<NormalProductItem> newEffectProducts, ExecuteContext context) {
-		boolean match = productMatchProcessor.process(productSessionWrap, context);
-		if (match) {
-			newEffectProducts.add(productSessionWrap.getItem());
+	private static void matchProduct(DefaultProductSessionWrap productSessionWrap,
+		Set<NormalProductItem> newEffectProducts, Object... request) {
+		MatchResult match;
+		if (request.length > 0) {
+			match = productSessionWrap.unwrap().getDefinition().match(request[0]);
+		} else {
+			match = productSessionWrap.unwrap().getDefinition().match(newEffectProducts);
+		}
+		productSessionWrap.setMatchResult(match);
+		if (MatchResult.match(match)) {
+			newEffectProducts.add(productSessionWrap.unwrap());
 		}
 	}
 

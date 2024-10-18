@@ -1,5 +1,7 @@
 package com.kuaishou.business.samples.app.bizscene.activity;
 
+import java.util.Objects;
+
 import org.springframework.stereotype.Component;
 
 import com.kuaishou.business.extension.dimension.BizScene;
@@ -20,7 +22,7 @@ public class Consolidate implements BizSceneIdentityDefinition {
 	@Override
 	public MatchStatus match(Object request, Long resourceId) {
 		CreateOrderRequest createOrder = (CreateOrderRequest) request;
-		if (createOrder.getCreateOrder().getConsolidate()) {
+		if (Objects.nonNull(createOrder) && createOrder.getCreateOrder().getConsolidate()) {
 			return MatchStatus.MATCH;
 		} else {
 			return MatchStatus.NOT_MATCH;

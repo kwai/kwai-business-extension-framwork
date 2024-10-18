@@ -7,7 +7,6 @@ import java.util.function.Supplier;
 import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.collect.Lists;
-import com.kuaishou.business.core.context.ExecuteContext;
 import com.kuaishou.business.core.extpoint.ExtPoint;
 import com.kuaishou.business.core.function.ExtCallback;
 import com.kuaishou.business.core.identity.manage.KbfRealizeItem;
@@ -15,16 +14,19 @@ import com.kuaishou.business.core.reduce.ReduceType;
 import com.kuaishou.business.core.reduce.Reducer;
 import com.kuaishou.business.core.session.KSessionScope;
 
-public abstract class Executor<Context extends ExecuteContext> {
+/**
+ * Executor for ext.
+ * An instance of this class is not thread-safe.
+ */
+public abstract class Executor {
 
 	public <Ext extends ExtPoint, T, R, P> R execute(Class<Ext> extClz, String methodName, ExtCallback<Ext, T> extMethod, Supplier<T> defaultMethod,
 		Reducer<T, R> reducer, P request) {
-		Context context = buildExecutorContext(extClz, methodName, request);
-		if (!check(context)) {
+		if (!check(request)) {
 			return reducer.reduce(Lists.newArrayList(defaultMethod.get()));
 		}
 
-		Collection<KbfRealizeItem> currentProducts = recognize(context);
+		Collection currentProducts = recognize(request);
 
 		List<KbfRealizeItem> kbfRealizeItemList = Lists.newArrayList();
 		kbfRealizeItemList.add(KSessionScope.getCurrentBusiness());
@@ -57,10 +59,8 @@ public abstract class Executor<Context extends ExecuteContext> {
 		return reducer.reduce(results);
 	}
 
-	public abstract <Ext extends ExtPoint, P> Context buildExecutorContext(Class<Ext> extClz, String methodName, P request);
+	public abstract Collection recognize(Object request);
 
-	public abstract <Product extends KbfRealizeItem> Collection<Product> recognize(Context context);
-
-	public abstract boolean check(Context context);
+	public abstract boolean check(Object request);
 
 }

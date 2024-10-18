@@ -1,7 +1,7 @@
 package com.kuaishou.business.core.identity.product;
 
 import com.kuaishou.business.core.annotations.KProduct;
-import com.kuaishou.business.core.identity.Match;
+import com.kuaishou.business.core.identity.MatchResult;
 
 /**
  * 水平产品定义
@@ -11,7 +11,7 @@ import com.kuaishou.business.core.identity.Match;
 public interface NormalProductIdentityDefinition<T> extends ProductIdentityDefinition<T> {
 
     @Override
-	Match match(T request);
+	MatchResult match(T request);
 
 }
 

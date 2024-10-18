@@ -52,7 +52,7 @@ public class BizSceneExtPointRealizeCollector implements SmartInitializingSingle
     public void init() {
         Map<String, Object> realizationBeanMap = KbfSpringUtils.getBeansWithAnnotation(BizSceneRealize.class);
         if (Objects.isNull(realizationBeanMap)) {
-            log.warn("run the biz-scene ext point realize collector, cannot find realize");
+            log.warn("run the bizScene ext point realize collector, cannot find realize");
             return;
         }
         checkExtMethod(realizationBeanMap);
@@ -89,20 +89,22 @@ public class BizSceneExtPointRealizeCollector implements SmartInitializingSingle
             // business
             if (!bizRealize.business().isInterface()) {
                 KBusiness annotation = bizRealize.business().getAnnotation(KBusiness.class);
-                BusinessItem businessItem = this.specManager.getBusinessSpec(annotation.code());
+                BusinessItem businessItem = this.specManager.getBusinessItem(annotation.code());
                 businessItem.getExtPointRealizes().add(extPointRealizeWrap);
                 continue;
             }
 
             fillingBizSceneExtPointRealize(bizRealize, extPointRealizeWrap);
         }
-        log.info("[kbf] run the biz-scene ext point realize collector, all effect number is " + loadRealize.size()
+		log.info("[kbf] item manager load business item : " + specManager.getAllBusinessItems());
+		log.info("[kbf] item manager load bizScene item : " + specManager.getAllProductItems());
+        log.info("[kbf] run the bizScene ext point realize collector, all effect number is " + loadRealize.size()
                 + ", realize is " + loadRealize);
     }
 
     public void fillingBizSceneExtPointRealize(BizSceneRealize bizRealize, ExtPointRealizeWrap extPointRealizeWrap) {
         if (bizRealize.scenes().length == 0) {
-            String errMsg = "[kbf] realize biz-scenes length illegal, name : " + bizRealize.getClass().getName();
+            String errMsg = "[kbf] realize bizScenes length illegal, name : " + bizRealize.getClass().getName();
             log.error(errMsg);
             throw new IllegalExtPointException(errMsg);
         }
@@ -120,10 +122,10 @@ public class BizSceneExtPointRealizeCollector implements SmartInitializingSingle
                     .collect(Collectors.toList());
             String comboName = String.join("-", dimensionNameList);
 
-            BizSceneItem bizSceneSpec = specManager.getProductSpec(comboCode);
+            BizSceneItem bizSceneSpec = specManager.getProductItem(comboCode);
             if (Objects.isNull(bizSceneSpec)) {
                 boolean isResource = dimensionCodeList.stream()
-                        .map(c -> specManager.getProductSpec(c))
+                        .map(c -> specManager.getProductItem(c))
                         .anyMatch(p -> EffectScope.RESOURCE.equals(p.getEffectScope()));
                 EffectScope effectScope = isResource ? EffectScope.RESOURCE : EffectScope.REQUEST;
                 ComboBizSceneIdentityDefinition comboDimension =
@@ -131,7 +133,7 @@ public class BizSceneExtPointRealizeCollector implements SmartInitializingSingle
                 ComboBizSceneItem comboDimensionSpec = new ComboBizSceneItem(comboName,
                         comboCode, comboDimension, effectScope);
                 comboDimensionSpec.getExtPointRealizes().add(extPointRealizeWrap);
-                specManager.registerProductSpec(comboDimensionSpec);
+                specManager.registerProductItem(comboDimensionSpec);
             } else {
                 bizSceneSpec.getExtPointRealizes().add(extPointRealizeWrap);
             }
@@ -139,7 +141,7 @@ public class BizSceneExtPointRealizeCollector implements SmartInitializingSingle
         if (MatchType.ANY.equals(bizRealize.matchType())) {
             Class<? extends BizSceneIdentityDefinition>[] dimensions = bizRealize.scenes();
             for (Class<? extends BizSceneIdentityDefinition> dimension : dimensions) {
-                BizSceneItem bizSceneSpec = specManager.getProductSpec(dimension.getSimpleName());
+                BizSceneItem bizSceneSpec = specManager.getProductItem(dimension.getSimpleName());
                 bizSceneSpec.getExtPointRealizes().add(extPointRealizeWrap);
             }
         }
@@ -181,7 +183,7 @@ public class BizSceneExtPointRealizeCollector implements SmartInitializingSingle
         }
 
         if (invalid) {
-            String errMsg = "[kbf] run the biz-scene ext point realize collector occurs error, please check log";
+            String errMsg = "[kbf] run the bizScene ext point realize collector occurs error, please check log";
             log.error(errMsg);
             throw new BizRealizeNotFoundException("", errMsg);
         }

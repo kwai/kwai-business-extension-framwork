@@ -23,10 +23,10 @@ public class DefaultSpecManager implements SpecManager<NormalProductItem> {
     private final Map<String, NormalProductItem> productSpecMap = new HashMap<>();
 
     @Override
-    public void registerBusinessSpec(BusinessItem businessItem) {
+    public void registerBusinessItem(BusinessItem businessItem) {
         String code = businessItem.code();
         if (businessSpecMap.containsKey(code)) {
-            String errMsg = "[kbf] DefaultSpecManager registerBusinessSpec code has exists, code : " + code;
+            String errMsg = "[kbf] DefaultItemManager registerBusinessItem code has exists, code : " + code;
             log.error(errMsg);
             throw new BizIdentityException(errMsg);
         }
@@ -34,10 +34,10 @@ public class DefaultSpecManager implements SpecManager<NormalProductItem> {
     }
 
     @Override
-    public void registerProductSpec(NormalProductItem productSpec) {
+    public void registerProductItem(NormalProductItem productSpec) {
         String code = productSpec.code();
         if (productSpecMap.containsKey(code)) {
-            String errMsg = "[kbf] DefaultSpecManager registerProductSpec code has exists, code : " + code;
+            String errMsg = "[kbf] DefaultItemManager registerProductItem code has exists, code : " + code;
             log.error(errMsg);
             throw new BizIdentityException(errMsg);
         }
@@ -45,32 +45,32 @@ public class DefaultSpecManager implements SpecManager<NormalProductItem> {
     }
 
     @Override
-    public BusinessItem getBusinessSpec(String code) {
+    public BusinessItem getBusinessItem(String code) {
         return businessSpecMap.get(code);
     }
 
     @Override
-    public NormalProductItem getProductSpec(String code) {
+    public NormalProductItem getProductItem(String code) {
         return productSpecMap.get(code);
     }
 
     @Override
-    public Collection<NormalProductItem> getAllProductSpecs() {
+    public Collection<NormalProductItem> getAllProductItems() {
         return productSpecMap.values();
     }
 
     @Override
-    public Collection<BusinessItem> getAllBusinessSpecs() {
+    public Collection<BusinessItem> getAllBusinessItems() {
         return businessSpecMap.values();
     }
 
     @Override
-    public int countAllProductSpecs() {
+    public int countAllProductItems() {
         return productSpecMap.size();
     }
 
     @Override
-    public int countAllBusinessSpecs() {
+    public int countAllBusinessItems() {
         return businessSpecMap.size();
     }
 }

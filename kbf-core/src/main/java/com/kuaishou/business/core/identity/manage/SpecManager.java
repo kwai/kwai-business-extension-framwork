@@ -16,49 +16,49 @@ public interface SpecManager<P extends BaseProductItem> {
 	 *
 	 * @param businessItem 垂直业务
 	 */
-    void registerBusinessSpec(BusinessItem businessItem);
+    void registerBusinessItem(BusinessItem businessItem);
 
 	/**
 	 *
-	 * @param productSpec 产品
+	 * @param productItem 产品
 	 */
-    void registerProductSpec(P productSpec);
+    void registerProductItem(P productItem);
 
 	/**
 	 *
 	 * @param code 业务身份
 	 * @return BusinessItem
 	 */
-    BusinessItem getBusinessSpec(String code);
+    BusinessItem getBusinessItem(String code);
 
 	/**
 	 *
 	 * @param code 业务身份
 	 * @return 产品
 	 */
-    P getProductSpec(String code);
+    P getProductItem(String code);
 
 	/**
 	 *
 	 * @return 所有产品
 	 */
-    Collection<P> getAllProductSpecs();
+    Collection<P> getAllProductItems();
 
 	/**
 	 *
 	 * @return 所有业务
 	 */
-    Collection<BusinessItem> getAllBusinessSpecs();
+    Collection<BusinessItem> getAllBusinessItems();
 
 	/**
 	 *
 	 * @return 产品数量
 	 */
-    int countAllProductSpecs();
+    int countAllProductItems();
 
 	/**
 	 *
 	 * @return 业务数量
 	 */
-    int countAllBusinessSpecs();
+    int countAllBusinessItems();
 }

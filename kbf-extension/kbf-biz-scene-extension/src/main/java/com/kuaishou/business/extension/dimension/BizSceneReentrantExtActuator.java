@@ -60,7 +60,9 @@ public class BizSceneReentrantExtActuator implements BizSceneExtActuator {
 		BizSceneExecutor bizSceneExecutor = new BizSceneExecutor();
 		String methodName = KbfMethodsUtils.getMethodFromCallback(extClz, extMethod);
 		bizSceneExecutor.setSupportBizSceneTypes(getExtMethodSupportTypes(extClz, methodName));
-		return bizSceneExecutor.execute(extClz, methodName, extMethod, defaultMethod, resourceId, reducer, request);
+		bizSceneExecutor.setResourceId(resourceId);
+		bizSceneExecutor.setIsResourceRequest(true);
+		return bizSceneExecutor.execute(extClz, methodName, extMethod, defaultMethod, reducer, request);
 	}
 
 	private List<String> getExtMethodSupportTypes(Class clazz, String methodName) {

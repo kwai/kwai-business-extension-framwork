@@ -2,7 +2,6 @@ package com.kuaishou.business.common.starter;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -11,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ClassUtils;
 
+import com.google.common.collect.Lists;
 import com.kuaishou.business.common.starter.conifg.KbfCommonProperties;
 import com.kuaishou.business.core.Invoker;
 import com.kuaishou.business.core.annotations.KBusiness;
@@ -22,9 +22,7 @@ import com.kuaishou.business.core.identity.manage.BusinessItem;
 import com.kuaishou.business.core.identity.manage.NormalProductItem;
 import com.kuaishou.business.core.identity.manage.SpecManager;
 import com.kuaishou.business.core.identity.product.NormalProductIdentityDefinition;
-import com.kuaishou.business.extension.engine.BizIdentityMatchProcessor;
 import com.kuaishou.business.extension.engine.DefaultBizIdentityRecognizer;
-import com.kuaishou.business.extension.engine.DefaultBizIdentitySessionWrap;
 import com.kuaishou.business.extension.engine.DefaultKSessionFactory;
 import com.kuaishou.business.extension.engine.DefaultSpecManager;
 import com.kuaishou.business.extension.engine.ExtActuator;
@@ -49,14 +47,12 @@ public class KbfCommonAutoConfiguration {
 
 	@Bean
 	public SpecManager specManager(List<NormalBizIdentityDefinition> bizIdentityDefinitions, List<NormalProductIdentityDefinition> productIdentityDefinitions) {
-		log.info("[kbf] load the proto spec manager");
+		log.info("[kbf] load the proto item manager");
 		DefaultSpecManager defaultSpecManager = new DefaultSpecManager();
 
 		registerBusiness(bizIdentityDefinitions, defaultSpecManager);
 		registerProduct(productIdentityDefinitions, defaultSpecManager);
 
-		log.info("[kbf] spec manager load business spec : " + defaultSpecManager.getAllBusinessSpecs());
-		log.info("[kbf] spec manager load product spec : " + defaultSpecManager.getAllProductSpecs());
 		return defaultSpecManager;
 	}
 
@@ -65,19 +61,19 @@ public class KbfCommonAutoConfiguration {
 		DefaultSpecManager defaultSpecManager) {
 		for (NormalBizIdentityDefinition bizIdentity : bizIdentityDefinitions) {
 			BusinessItem businessItem = getBusinessSpec(bizIdentity);
-			defaultSpecManager.registerBusinessSpec(businessItem);
+			defaultSpecManager.registerBusinessItem(businessItem);
 		}
 	}
 
 	private BusinessItem getBusinessSpec(NormalBizIdentityDefinition bizIdentity) {
 		KBusiness annotation = ClassUtils.getUserClass(bizIdentity.getClass()).getAnnotation(KBusiness.class);
 		if (Objects.isNull(annotation)) {
-			String errMsg = "[kbf] business identity cannot find @Business annotation, business : " + bizIdentity;
+			String errMsg = "[kbf] business identity cannot find @KBusiness annotation, business : " + bizIdentity;
 			log.error(errMsg);
 			throw new BizIdentityException(errMsg);
 		}
 		if (StringUtils.isBlank(annotation.name()) || StringUtils.isBlank(annotation.code())) {
-			String errMsg = "[kbf] business identity @Business property invalid, business : " + bizIdentity;
+			String errMsg = "[kbf] business identity @KBusiness property invalid, business : " + bizIdentity;
 			log.error(errMsg);
 			throw new BizIdentityException(errMsg);
 		}
@@ -88,19 +84,19 @@ public class KbfCommonAutoConfiguration {
 		DefaultSpecManager defaultSpecManager) {
 		for (NormalProductIdentityDefinition productIdentity : productIdentityDefinitions) {
 			NormalProductItem productSpec = getProductSpec(productIdentity);
-			defaultSpecManager.registerProductSpec(productSpec);
+			defaultSpecManager.registerProductItem(productSpec);
 		}
 	}
 
 	private NormalProductItem getProductSpec(NormalProductIdentityDefinition productIdentity) {
 		KProduct annotation = ClassUtils.getUserClass(productIdentity.getClass()).getAnnotation(KProduct.class);
 		if (Objects.isNull(annotation)) {
-			String errMsg = "[kbf] product identity cannot find @Product annotation, product : " + productIdentity;
+			String errMsg = "[kbf] product identity cannot find @KProduct annotation, product : " + productIdentity;
 			log.error(errMsg);
 			throw new BizIdentityException(errMsg);
 		}
 		if (StringUtils.isBlank(annotation.name())) {
-			String errMsg = "[kbf] product identity @Product property invalid, product : " + productIdentity;
+			String errMsg = "[kbf] product identity @KProduct property invalid, product : " + productIdentity;
 			log.error(errMsg);
 			throw new BizIdentityException(errMsg);
 		}
@@ -109,14 +105,8 @@ public class KbfCommonAutoConfiguration {
 
 	@Bean
 	public BizIdentityRecognizer bizIdentityRecognizer(SpecManager<NormalProductItem> specManager) {
-		List<DefaultBizIdentitySessionWrap> bizIdentitySessionWrapList = specManager.getAllBusinessSpecs().stream()
-			.map(item -> {
-				DefaultBizIdentitySessionWrap bizIdentitySessionWrap = new DefaultBizIdentitySessionWrap();
-				bizIdentitySessionWrap.setItem(item);
-				return bizIdentitySessionWrap;
-			}).collect(Collectors.toList());
 		DefaultBizIdentityRecognizer defaultBizIdentityRecognizer =
-			new DefaultBizIdentityRecognizer(bizIdentitySessionWrapList, new BizIdentityMatchProcessor());
+			new DefaultBizIdentityRecognizer(Lists.newArrayList(specManager.getAllBusinessItems()));
 		return defaultBizIdentityRecognizer;
 	}
 

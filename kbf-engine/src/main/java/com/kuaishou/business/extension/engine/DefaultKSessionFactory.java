@@ -39,7 +39,9 @@ public class DefaultKSessionFactory<T> implements KSessionFactory<KSession, T> {
     public <Context extends Class<? extends KBizContext>> KSession openSession(T request, Context context) {
         BusinessItem<T> businessItem = bizIdentityRecognizer.recognize(request);
 		if (Objects.isNull(businessItem)) {
-			throw new BizIdentityException("[kbf] can not found business");
+			String errMsg =
+				"[kbf] openSession cannot find business, request : " + request + ", context : " + context;
+			throw new BizIdentityException(errMsg);
 		}
 
         KBizContext kBizContext = null;
@@ -52,7 +54,7 @@ public class DefaultKSessionFactory<T> implements KSessionFactory<KSession, T> {
             log.error(errMsg);
             throw new KSessionException(errMsg);
         }
-        Collection<NormalProductItem> allProductSpecs = specManager.getAllProductSpecs();
+        Collection<NormalProductItem> allProductSpecs = specManager.getAllProductItems();
         List<DefaultProductSessionWrap> productSessionWrapList = Lists.newArrayListWithExpectedSize(allProductSpecs.size());
         for (NormalProductItem productItem : allProductSpecs) {
             DefaultProductSessionWrap productSessionWrap = new DefaultProductSessionWrap();

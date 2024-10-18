@@ -19,7 +19,8 @@ public class LocalInvoke implements Invoker {
 
     @Override
 	public <R, T extends ExtPoint> R invoke(String bizCode, Class<T> c, Method method, Object[] params, Object defaultInvoker) throws Throwable {
-		return simpleExtActuator.execute(c, t -> Reflect.on(t).call(method.getName(), params).get(), () -> Reflect.on(defaultInvoker).call(method.getName(), params).get(), Reducers.first());
+		return simpleExtActuator.execute(c, t -> Reflect.on(t).call(method.getName(), params).get(),
+			() -> Reflect.on(defaultInvoker).call(method.getName(), params).get(), Reducers.first());
     }
 
 }

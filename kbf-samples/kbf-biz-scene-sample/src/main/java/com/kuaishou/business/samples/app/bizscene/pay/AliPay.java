@@ -1,5 +1,7 @@
 package com.kuaishou.business.samples.app.bizscene.pay;
 
+import java.util.Objects;
+
 import org.springframework.stereotype.Component;
 
 import com.kuaishou.business.extension.dimension.BizScene;
@@ -20,7 +22,7 @@ public class AliPay implements BizSceneIdentityDefinition {
 	@Override
 	public MatchStatus match(Object request) {
 		CreateOrderRequest createOrder = (CreateOrderRequest) request;
-		if ("aliPay".equals(createOrder.getCreateOrder().getPayWay())) {
+		if (Objects.nonNull(createOrder) && "aliPay".equals(createOrder.getCreateOrder().getPayWay())) {
 			return MatchStatus.MATCH;
 		} else {
 			return MatchStatus.NOT_MATCH;

@@ -1,24 +1,16 @@
 package com.kuaishou.business.extension.dimension;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.function.Supplier;
 
 import org.apache.commons.collections4.CollectionUtils;
 
-import com.google.common.collect.Lists;
 import com.kuaishou.business.core.exception.KSessionException;
-import com.kuaishou.business.core.extpoint.ExtPoint;
-import com.kuaishou.business.core.function.ExtCallback;
-import com.kuaishou.business.core.identity.manage.KbfRealizeItem;
-import com.kuaishou.business.core.reduce.Reducer;
 import com.kuaishou.business.core.session.KSessionScope;
-import com.kuaishou.business.extension.dimension.identity.BizSceneItem;
 import com.kuaishou.business.extension.dimension.identity.BizSceneSessionWrap;
-import com.kuaishou.business.extension.dimension.identity.match.BizSceneMatchProcessor;
 import com.kuaishou.business.extension.dimension.identity.recognizer.ReentrantBizSceneRecognizer;
 import com.kuaishou.business.extension.dimension.session.BizSceneKSessionScope;
 import com.kuaishou.business.extension.engine.Executor;
-import com.kuaishou.business.extension.engine.SimpleKExtPointManger;
 import com.kuaishou.business.extension.spring.ExtUtils;
 
 import lombok.Setter;
@@ -27,54 +19,25 @@ import lombok.Setter;
  * @author liuzhuo07
  * Created on 2024-09-28
  */
-public class BizSceneExecutor extends Executor<BizSceneExecuteContext> {
+public class BizSceneExecutor extends Executor {
 
 	@Setter
 	private List<String> supportBizSceneTypes;
-
-	public <Ext extends ExtPoint, T, R, P> R execute(Class<Ext> extClz, String methodName, ExtCallback<Ext, T> extMethod, Supplier<T> defaultMethod,
-		Long resourceId, Reducer<T, R> reducer, P request) {
-		BizSceneExecuteContext context = buildExecutorContext(extClz, methodName, request);
-		if (!check(context)) {
-			return reducer.reduce(Lists.newArrayList(defaultMethod.get()));
-		}
-		context.setResourceId(resourceId);
-		context.setIsResourceRequest(true);
-
-		List<BizSceneItem> currentProducts = recognize(context);
-
-		List<KbfRealizeItem> kbfRealizeItemList = Lists.newArrayList();
-		kbfRealizeItemList.add(KSessionScope.getCurrentBusiness());
-		kbfRealizeItemList.addAll(currentProducts);
-
-		List<Ext> instanceList = SimpleKExtPointManger.getInstance(kbfRealizeItemList, extClz, methodName);
-
-		return execAndHandlerResults(extMethod, defaultMethod, reducer, instanceList);
-	}
+	@Setter
+	private Long resourceId;
+	@Setter
+	private Boolean isResourceRequest = false;
 
 	@Override
-	public <Ext extends ExtPoint, P> BizSceneExecuteContext buildExecutorContext(Class<Ext> extClz, String methodName, P request) {
-		BizSceneExecuteContext context = new BizSceneExecuteContext();
-		context.setRequest(request);
-		context.setExtClz(extClz);
-		context.setMethodName(methodName);
-		return context;
-	}
-
-	@Override
-	public List<BizSceneItem> recognize(BizSceneExecuteContext context) {
+	public Collection recognize(Object request) {
 		List<BizSceneSessionWrap> bizScenes = BizSceneKSessionScope.getBizScenes();
 		ReentrantBizSceneRecognizer recognizer = new ReentrantBizSceneRecognizer(bizScenes,
-			supportBizSceneTypes, new BizSceneMatchProcessor());
-		if (context.getIsResourceRequest()) {
-			return recognizer.recognize(context, context.getResourceId());
-		} else {
-			return recognizer.recognize(context);
-		}
+			supportBizSceneTypes, resourceId, isResourceRequest);
+		return recognizer.recognize(request);
 	}
 
 	@Override
-	public boolean check(BizSceneExecuteContext context) {
+	public boolean check(Object request) {
 		if (!BizSceneKSessionScope.init()) {
 			String errMsg = "[kbf] ExtExecutor execute scope is empty";
 			throw new KSessionException(errMsg);

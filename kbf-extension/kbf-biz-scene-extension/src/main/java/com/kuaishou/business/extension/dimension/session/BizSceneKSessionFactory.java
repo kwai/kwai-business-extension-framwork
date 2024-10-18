@@ -54,7 +54,7 @@ public class BizSceneKSessionFactory<T> implements KSessionFactory<BizSceneKSess
             log.error(errMsg);
             throw new KSessionException(errMsg);
         }
-        Collection<BizSceneItem> allProductSpecs = specManager.getAllProductSpecs();
+        Collection<BizSceneItem> allProductSpecs = specManager.getAllProductItems();
         List<BizSceneSessionWrap> bizSceneSessionWrapList = Lists.newArrayListWithExpectedSize(allProductSpecs.size());
         for (BizSceneItem bizSceneSpec : allProductSpecs) {
             BizSceneSessionWrap bizSceneSessionWrap = new BizSceneSessionWrap();

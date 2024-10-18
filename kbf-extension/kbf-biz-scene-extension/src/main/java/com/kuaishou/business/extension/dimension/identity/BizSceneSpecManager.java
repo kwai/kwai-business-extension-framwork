@@ -26,10 +26,10 @@ public class BizSceneSpecManager implements SpecManager<BizSceneItem> {
     private final List<BizSceneItem> bizSceneSpecList = new ArrayList<>();
 
     @Override
-    public void registerBusinessSpec(BusinessItem businessItem) {
+    public void registerBusinessItem(BusinessItem businessItem) {
         String code = businessItem.code();
         if (businessSpecMap.containsKey(code)) {
-            String errMsg = "[kbf] BizSceneSpecManager registerBusinessSpec code has exists, code : " + code;
+            String errMsg = "[kbf] BizSceneItemManager registerBusinessItem code has exists, code : " + code;
             log.error(errMsg);
             throw new BizIdentityException(errMsg);
         }
@@ -38,10 +38,10 @@ public class BizSceneSpecManager implements SpecManager<BizSceneItem> {
     }
 
     @Override
-    public void registerProductSpec(BizSceneItem bizSceneSpec) {
+    public void registerProductItem(BizSceneItem bizSceneSpec) {
         String code = bizSceneSpec.code();
         if (bizSceneSpecMap.containsKey(code)) {
-            String errMsg = "[kbf] BizSceneSpecManager registerProductSpec code has exists, code : " + code;
+            String errMsg = "[kbf] BizSceneItemManager registerProductItem code has exists, code : " + code;
             log.error(errMsg);
             throw new BizIdentityException(errMsg);
         }
@@ -50,32 +50,32 @@ public class BizSceneSpecManager implements SpecManager<BizSceneItem> {
     }
 
     @Override
-    public BusinessItem getBusinessSpec(String code) {
+    public BusinessItem getBusinessItem(String code) {
         return businessSpecMap.get(code);
     }
 
     @Override
-    public BizSceneItem getProductSpec(String code) {
+    public BizSceneItem getProductItem(String code) {
         return bizSceneSpecMap.get(code);
     }
 
     @Override
-    public Collection<BizSceneItem> getAllProductSpecs() {
+    public Collection<BizSceneItem> getAllProductItems() {
         return bizSceneSpecList;
     }
 
     @Override
-    public Collection<BusinessItem> getAllBusinessSpecs() {
+    public Collection<BusinessItem> getAllBusinessItems() {
         return businessItemList;
     }
 
     @Override
-    public int countAllProductSpecs() {
+    public int countAllProductItems() {
         return bizSceneSpecMap.size();
     }
 
     @Override
-    public int countAllBusinessSpecs() {
+    public int countAllBusinessItems() {
         return businessSpecMap.size();
     }
 }
