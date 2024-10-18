@@ -63,9 +63,4 @@ public enum MatchStatus implements Match {
     public static MatchStatus ofBooleanNotCache(boolean match) {
         return match ? MATCH_NOT_CACHE : NOT_MATCH_NOT_CACHE;
     }
-
-	@Override
-	public boolean hasMatch() {
-		return hasMatch(this);
-	}
 }

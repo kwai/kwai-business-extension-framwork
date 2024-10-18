@@ -8,6 +8,4 @@ package com.kuaishou.business.core.identity;
  * {@link MatchResult}
  */
 public interface Match {
-
-	boolean hasMatch();
 }
