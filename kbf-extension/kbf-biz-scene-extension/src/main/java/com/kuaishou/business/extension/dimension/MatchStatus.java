@@ -4,13 +4,9 @@ import java.util.Objects;
 
 import com.kuaishou.business.core.identity.Match;
 
-/**
- * @author zhangqinxian <zhangqinxian@kuaishou.com>
- * Created on 2023-03-18
- */
 public enum MatchStatus implements Match {
     /**
-     * 未知状态 -> 代表信息缺失,还可以再识别
+	 * 未知状态 -代表信息缺失,还可以再识别
      */
     UNKNOWN,
     /**
@@ -18,7 +14,7 @@ public enum MatchStatus implements Match {
      */
     MATCH,
     /**
-     * 不匹配 -> 确定不匹配,后续不再识别
+	 * 不匹配 -确定不匹配,后续不再识别
      */
     NOT_MATCH,
 
@@ -28,7 +24,7 @@ public enum MatchStatus implements Match {
     MATCH_NOT_CACHE,
 
     /**
-     * 不匹配不缓存 -> 代表信息缺失,还可以再识别
+	 * 不匹配不缓存 -代表信息缺失,还可以再识别
      */
     NOT_MATCH_NOT_CACHE;
 

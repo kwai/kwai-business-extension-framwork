@@ -1,8 +1,6 @@
 package com.kuaishou.business.extension.dimension.identity;
 
 /**
- * @author zhangqinxian <zhangqinxian@kuaishou.com>
- * Created on 2023-03-20
  *
  * 作用域
  */

@@ -16,9 +16,6 @@ public interface BizSceneIdentityDefinition<T> extends ProductIdentityDefinition
         return MatchStatus.UNKNOWN;
     }
 
-    /**
-     * 资源作用域识别
-     */
     default Match match(Object request, Long resourceId) {
         return MatchStatus.UNKNOWN;
     }
