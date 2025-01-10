@@ -1,0 +1,9 @@
+{
+	"properties": [
+		{
+			"name": "spring.kbf.common.enabled",
+			"type": "java.lang.Boolean",
+			"description": "enabled kbf"
+		}
+	]
+}

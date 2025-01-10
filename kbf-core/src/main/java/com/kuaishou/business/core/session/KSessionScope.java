@@ -11,7 +11,7 @@ import com.kuaishou.business.core.context.KBizContext;
 import com.kuaishou.business.core.identity.MatchResult;
 import com.kuaishou.business.core.identity.manage.BusinessItem;
 import com.kuaishou.business.core.identity.manage.NormalProductItem;
-import com.kuaishou.business.core.identity.product.ProductSessionWrap;
+import com.kuaishou.business.core.identity.product.DefaultProductSessionWrap;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -62,16 +62,16 @@ public final class KSessionScope {
         return SCOPE.get().kSession.getBusinessItem();
     }
 
-    public static List<ProductSessionWrap> getProducts() {
+    public static List<DefaultProductSessionWrap> getProducts() {
         return SCOPE.get().kSession.getProductSessionWraps();
     }
 
     public static Set<NormalProductItem> getEffectProducts() {
-        List<ProductSessionWrap> productSessionWraps = SCOPE.get().kSession.getProductSessionWraps();
+        List<DefaultProductSessionWrap> productSessionWraps = SCOPE.get().kSession.getProductSessionWraps();
         Set<NormalProductItem> productSpecs = Sets.newHashSet();
-        for (ProductSessionWrap productSessionWrap : productSessionWraps) {
+        for (DefaultProductSessionWrap productSessionWrap : productSessionWraps) {
             if (MatchResult.match(productSessionWrap.getMatchResult())) {
-                productSpecs.add(productSessionWrap.getProductSpec());
+                productSpecs.add(productSessionWrap.getItem());
             }
         }
         return productSpecs;
@@ -79,11 +79,11 @@ public final class KSessionScope {
 
 
     public static Set<NormalProductItem> getIneffectProducts() {
-        List<ProductSessionWrap> productSessionWraps = SCOPE.get().kSession.getProductSessionWraps();
+        List<DefaultProductSessionWrap> productSessionWraps = SCOPE.get().kSession.getProductSessionWraps();
         Set<NormalProductItem> productSpecs = Sets.newHashSet();
-        for (ProductSessionWrap productSessionWrap : productSessionWraps) {
+        for (DefaultProductSessionWrap productSessionWrap : productSessionWraps) {
             if (MatchResult.notMatch(productSessionWrap.getMatchResult())) {
-                productSpecs.add(productSessionWrap.getProductSpec());
+                productSpecs.add(productSessionWrap.getItem());
             }
         }
         return productSpecs;

@@ -2,12 +2,11 @@ package com.kuaishou.business.core.identity.biz;
 
 import com.kuaishou.business.core.identity.IdentityDefinition;
 import com.kuaishou.business.core.identity.IdentityMatcher;
-import com.kuaishou.business.core.identity.Match;
 
 /**
  * 业务身份定义
  */
-public interface BizIdentityDefinition<T, R extends Match> extends IdentityDefinition, IdentityMatcher<T, R> {
+public interface BizIdentityDefinition<T> extends IdentityDefinition, IdentityMatcher<T> {
 
     /**
      * @return 当前支持的业务身份

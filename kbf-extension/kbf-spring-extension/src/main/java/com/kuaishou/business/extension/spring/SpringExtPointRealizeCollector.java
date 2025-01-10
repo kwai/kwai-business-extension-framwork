@@ -57,13 +57,13 @@ public class SpringExtPointRealizeCollector implements SmartInitializingSingleto
             loadRealize.put(key, extPointRealizeWrap);
 
             for (String code : bizRealize.bizCode()) {
-                BusinessItem businessItem = specManager.getBusinessSpec(code);
+                BusinessItem businessItem = specManager.getBusinessItem(code);
                 if (Objects.nonNull(businessItem)) {
                     businessItem.getExtPointRealizes().add(extPointRealizeWrap);
                     continue;
                 }
 
-                BaseProductItem productSpec = specManager.getProductSpec(code);
+                BaseProductItem productSpec = specManager.getProductItem(code);
                 if (Objects.nonNull(productSpec)) {
                     productSpec.getExtPointRealizes().add(extPointRealizeWrap);
                     continue;
@@ -75,6 +75,8 @@ public class SpringExtPointRealizeCollector implements SmartInitializingSingleto
                 throw new BizRealizeNotFoundException(code, errMsg);
             }
         });
+		log.info("[kbf] item manager load business item : " + specManager.getAllBusinessItems());
+		log.info("[kbf] item manager load product item : " + specManager.getAllProductItems());
         log.info("[kbf] run the proto ext point realize collector, all effect number is " + loadRealize.size()
                 + ", realize is " + loadRealize);
     }

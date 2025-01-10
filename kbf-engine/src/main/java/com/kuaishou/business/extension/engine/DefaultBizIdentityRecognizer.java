@@ -14,17 +14,17 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class DefaultBizIdentityRecognizer<T> implements BizIdentityRecognizer<T> {
 
-    private final List<BusinessItem<T>> businessItems;
+	private final List<BusinessItem<T>> businessItemList;
 
     @Override
     public BusinessItem<T> recognize(T request) {
-        for (BusinessItem<T> businessItem : businessItems) {
-            MatchResult matchResult = businessItem.getBizIdentityDefinition().match(request);
-            if (MatchResult.match(matchResult)) {
-                return businessItem;
-            }
-        }
-        return null;
+		for (BusinessItem<T> businessItem : businessItemList) {
+			MatchResult matchResult = (MatchResult) businessItem.getDefinition().match(request);
+			if (MatchResult.match(matchResult)) {
+				return businessItem;
+			}
+		}
+		return null;
     }
 
 }

@@ -1,12 +1,12 @@
 package com.kuaishou.business.extension.spring;
 
-import java.util.Set;
+import java.util.List;
 import java.util.function.Supplier;
 
 import com.kuaishou.business.core.extpoint.ExtPoint;
 import com.kuaishou.business.core.function.ExtAction;
 import com.kuaishou.business.core.function.ExtCallback;
-import com.kuaishou.business.core.identity.manage.NormalProductItem;
+import com.kuaishou.business.core.identity.manage.KbfRealizeItem;
 import com.kuaishou.business.core.reduce.Reducer;
 import com.kuaishou.business.extension.engine.ExtActuator;
 
@@ -31,7 +31,7 @@ public abstract class AbstractExtActuator implements ExtActuator {
 		}, reducer, request);
     }
 
-    protected abstract <P> Set<NormalProductItem> recognize(P request);
+    protected abstract List<? extends KbfRealizeItem> recognize(Object request);
 
     @Override
     public <Ext extends ExtPoint, T, R, P> R execute(Class<Ext> extClz, ExtCallback<Ext, T> extMethod, Supplier<T> defaultMethod, Reducer<T, R> reducer, P request) {

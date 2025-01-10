@@ -1,6 +1,6 @@
 package com.kuaishou.business.extension.spring;
 
-import java.util.Set;
+import java.util.List;
 
 import com.kuaishou.business.core.identity.manage.NormalProductItem;
 import com.kuaishou.business.core.session.KSessionScope;
@@ -17,9 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 public class SimpleExtActuator extends AbstractExtActuator {
 
     @Override
-    public <P> Set<NormalProductItem> recognize(P request) {
-        SimpleProductIdentityRecognizer<P> recognizer = new SimpleProductIdentityRecognizer<>(KSessionScope.getProducts());
+    public List<NormalProductItem> recognize(Object request) {
+		SimpleProductIdentityRecognizer recognizer = new SimpleProductIdentityRecognizer(KSessionScope.getProducts());
         return recognizer.recognize(request);
     }
+
 
 }

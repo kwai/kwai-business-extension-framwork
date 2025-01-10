@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.kuaishou.business.common.starter.KbfBizSceneAutoConfiguration

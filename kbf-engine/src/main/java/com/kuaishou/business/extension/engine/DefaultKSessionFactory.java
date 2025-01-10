@@ -13,7 +13,7 @@ import com.kuaishou.business.core.identity.biz.BizIdentityRecognizer;
 import com.kuaishou.business.core.identity.manage.BusinessItem;
 import com.kuaishou.business.core.identity.manage.NormalProductItem;
 import com.kuaishou.business.core.identity.manage.SpecManager;
-import com.kuaishou.business.core.identity.product.ProductSessionWrap;
+import com.kuaishou.business.core.identity.product.DefaultProductSessionWrap;
 import com.kuaishou.business.core.session.KSession;
 import com.kuaishou.business.core.session.KSessionFactory;
 
@@ -39,7 +39,9 @@ public class DefaultKSessionFactory<T> implements KSessionFactory<KSession, T> {
     public <Context extends Class<? extends KBizContext>> KSession openSession(T request, Context context) {
         BusinessItem<T> businessItem = bizIdentityRecognizer.recognize(request);
 		if (Objects.isNull(businessItem)) {
-			throw new BizIdentityException("[kbf] can not found business");
+			String errMsg =
+				"[kbf] openSession cannot find business, request : " + request + ", context : " + context;
+			throw new BizIdentityException(errMsg);
 		}
 
         KBizContext kBizContext = null;
@@ -52,11 +54,11 @@ public class DefaultKSessionFactory<T> implements KSessionFactory<KSession, T> {
             log.error(errMsg);
             throw new KSessionException(errMsg);
         }
-        Collection<NormalProductItem> allProductSpecs = specManager.getAllProductSpecs();
-        List<ProductSessionWrap> productSessionWrapList = Lists.newArrayListWithExpectedSize(allProductSpecs.size());
-        for (NormalProductItem productSpec : allProductSpecs) {
-            ProductSessionWrap productSessionWrap = new ProductSessionWrap();
-            productSessionWrap.setProductSpec(productSpec);
+        Collection<NormalProductItem> allProductSpecs = specManager.getAllProductItems();
+        List<DefaultProductSessionWrap> productSessionWrapList = Lists.newArrayListWithExpectedSize(allProductSpecs.size());
+        for (NormalProductItem productItem : allProductSpecs) {
+            DefaultProductSessionWrap productSessionWrap = new DefaultProductSessionWrap();
+            productSessionWrap.setItem(productItem);
             productSessionWrapList.add(productSessionWrap);
         }
 

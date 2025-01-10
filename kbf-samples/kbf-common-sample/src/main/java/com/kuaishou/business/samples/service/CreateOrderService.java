@@ -8,4 +8,5 @@ public interface CreateOrderService {
 
 	CreateOrderResponse createOrder(CreateOrderRequest createOrderRequest);
 
+	CreateOrderResponse createOrder2(CreateOrderRequest createOrderRequest);
 }

@@ -8,10 +8,10 @@ import com.kuaishou.business.core.identity.MatchResult;
  *
  * 需要结合{@link KProduct}或其扩展使用
  */
-public interface NormalProductIdentityDefinition<T> extends ProductIdentityDefinition<T, MatchResult> {
+public interface NormalProductIdentityDefinition<T> extends ProductIdentityDefinition<T> {
 
     @Override
-    MatchResult match(T request);
+	MatchResult match(T request);
 
 }
 
